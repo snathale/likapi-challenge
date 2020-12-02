@@ -1,0 +1,42 @@
+version: "3.4"
+
+services:
+
+  app:
+    build: ./
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    networks:
+      back:
+        aliases:
+          - "app.service"
+    volumes:
+      - .:/opt/project/app
+
+  mongo:
+    image: mongo:4.4.2
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      back:
+        aliases:
+          - "mongo.db.service"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: dummyPass
+    volumes:
+      - mongo_data_vol:/data/db
+  #    - ./mongo/scripts:/opt/app
+
+
+volumes:
+  mongo_data_vol:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+
+networks:
+  back:
