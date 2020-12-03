@@ -17,23 +17,27 @@ export default class OrderModel {
     })
 
     OrderSchema = new Schema({
-        id: {
-            type: Number,
-            required: true
+            order_id: {
+                type: Number,
+                required: true
+            },
+            number: {
+                type: String,
+                required: true
+            },
+            volumes: [
+                this.VolumeSchema
+            ],
+            value: {
+                type: Number,
+                required: true
+            },
+            organization: {
+                type: String
+            }
         },
-        number: {
-            type: String,
-            required: true
-        },
-        volumes: [
-            this.VolumeSchema
-        ],
-        value: {
-            type: Number,
-            required: true
-        },
-        organization: {
-            type: String
+        {
+            timestamps: true
         }
-    })
+    )
 }

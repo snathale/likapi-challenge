@@ -5,27 +5,22 @@ import Order from "../../domain/Order";
 import IRawOrder from "../../domain/IRawOrder";
 import Volume from "../../domain/Volume";
 
-const CREATE_SOLICITATION_ERROR = "impossible create order"
+const CREATE_SOLICITATION_ERROR = "impossible create order on bling service"
 
 export default class OrderService {
 
-    public async createSolicitation(deals: Array<IRawDeal>): Promise<Array<Order>> {
-
+    public async createOrder(deals: Array<IRawDeal>): Promise<Order[]> {
         return new Promise(async (resolve, reject) => {
-            let resp: Array<Order> = []
+            let resp: Order[] = []
             await Promise.all(deals.map(async (deal: IRawDeal) => {
                 await OrderService.saveOrder(deal)
                     .then((response: AxiosResponse) => {
                         const order = response.data.retorno.pedidos
                         if (order) {
-                            console.log('befor', order[0])
-                            // return OrderService.hydrateOrder(order[0].pedido, deal.value, deal.org_name)
                             resp.push(OrderService.hydrateOrder(order[0].pedido, deal.value, deal.org_name))
-                            // console.log('push', resp)
                         }
                     })
                     .catch((err) => {
-                        console.log(err)
                         reject(new Error(CREATE_SOLICITATION_ERROR))
                     })
             }))
@@ -44,7 +39,7 @@ export default class OrderService {
                 },
                 itens: {
                     item: {
-                        codigo: deals.id + "97952",
+                        codigo: deals.id + "979653",
                         descricao: deals.title,
                         vlr_unit: deals.value,
                         vlr: "1"

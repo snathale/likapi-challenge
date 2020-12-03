@@ -4,7 +4,6 @@ import OrderRepository from "../infrastructure/OrderRepository";
 import OrderController from "../controller/OrderController";
 import DealService from "../infrastructure/service/DealService";
 import OrderService from "../infrastructure/service/OrderService";
-const mongoose = require('mongoose')
 
 export default class App {
     server: core.Express
