@@ -2,11 +2,12 @@ import mongoose from "mongoose"
 import Order from "../domain/Order";
 import OrderModel from "../models/OrderModel";
 
-const CREATE_ORDER_ERROR = "impossible create order on mongodb"
+const CREATE_ORDER_ERROR = "impossible save order on mongodb"
+const GET_ORDER_ERROR = "impossible restore order on mongodb"
 
 export default class OrderRepository {
 
-    private static async create(order: Order) {
+    private static async connect() {
         let url = process.env.MONGO_DB_URL!
         await mongoose.connect(url, {
             useNewUrlParser: true,
@@ -15,35 +16,61 @@ export default class OrderRepository {
             user: process.env.MONGO_DB_USER,
             pass: process.env.MONGO_DB_PASSWORD
         })
-        return await new OrderModel().model.create({
-            order_id: order.id,
-            number: order.number,
-            volumes: order.volumes,
-            value: order.value,
-            organization: order.organization,
-        })
     }
 
-    public async saveOrders(orders: Array<Order>): Promise<Array<OrderModel>> {
+    private static async save(order: Order) {
+        await OrderRepository.connect()
+        const day = order.date.getUTCDay()
+        const month = order.date.getUTCMonth()
+        const year = order.date.getUTCFullYear()
+        const gte = new Date(Date.UTC(year, month, day, 0, 0, 0))
+        const lte = new Date(Date.UTC(year, month, day, 23, 59, 59))
+        return new OrderModel().model.update(
+            {
+                createdAt: {
+                    $gte: gte,
+                    $lte: lte
+                }
+            },
+            {
+                $inc: {
+                    value: order.value
+                },
+            },
+            {
+                upsert: true
+            })
+    }
+
+    public async saveOrders(orders: Array<Order>): Promise<OrderModel[]> {
         return new Promise(async (resolve, reject) => {
-            let users: OrderModel[] = []
+            let resp: OrderModel[] = []
             await Promise.all(
                 orders.map(async (order) => {
-                    await OrderRepository.create(order)
+                    await OrderRepository.save(order)
                         .then((user) => {
-                            users.push(user)
+                            resp.push(user)
                         })
                         .catch((err) => {
                             reject(new Error(CREATE_ORDER_ERROR))
                         })
                 })
             )
-            resolve(users)
+            resolve(resp)
         })
 
     }
 
-    public getOrders() {
-
+    public async getOrders(): Promise<OrderModel[]> {
+        return new Promise(async (resolve, reject) => {
+            await OrderRepository.connect()
+            let data = await new OrderModel().model.find()
+                .then((model) => {
+                    resolve(model)
+                })
+                .catch((err) => {
+                    reject(new Error(GET_ORDER_ERROR))
+                })
+        })
     }
 }

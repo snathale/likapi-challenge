@@ -2,6 +2,7 @@ import {Request, Response} from "express";
 import OrderRepository from "../infrastructure/OrderRepository";
 import DealService from "../infrastructure/service/DealService";
 import OrderService from "../infrastructure/service/OrderService";
+import jsend from "jsend"
 
 export default class OrderController {
     private repository: OrderRepository
@@ -15,25 +16,24 @@ export default class OrderController {
     }
 
     getOrders = async (req: Request, res: Response) => {
-        // try {
-        //     // let deals = await this.repository.
-        //     let orders = await this.orderService.createSolicitation(deals)
-        // } catch (err) {
-        //     console.log(err)
-        //     res.status(400).json({message: "error"})
-        // }
+        try {
+            const orders = await this.repository.getOrders()
+            res.status(200).json(jsend.success(orders))
+        } catch (err) {
+            console.log(err)
+            res.status(500).json(jsend.fail(err.message))
+        }
     }
 
     createOrders = async (req: Request, res: Response) => {
         try {
             let deals = await this.dealService.getAllWonDials()
             let orders = await this.orderService.createOrder(deals)
-            let saved = await this.repository.saveOrders(orders)
-            const data = {status: 'success', data: (saved)? saved: null}
-            res.status(200).json(data)
+            await this.repository.saveOrders(orders)
+            res.status(200).json(jsend.success(orders))
         } catch (err) {
             console.log(err)
-            res.status(500).json({status:'error', message: err.message})
+            res.status(500).json(jsend.fail(err.message))
         }
     }
 
