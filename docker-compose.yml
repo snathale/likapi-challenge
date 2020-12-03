@@ -29,8 +29,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: dummyPass
     volumes:
       - mongo_data_vol:/data/db
-  #    - ./mongo/scripts:/opt/app
-
 
 volumes:
   mongo_data_vol:

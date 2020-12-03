@@ -24,7 +24,7 @@ export default class App {
         let routes = express.Router();
         const controller = new OrderController(this.repository, new OrderService, new DealService)
         routes.get("/v1/orders", controller.getOrders)
-        routes.post('/v1/orders', controller.createOrders)
+        routes.post('/v1/orders/sync', controller.createOrders)
         this.server.use(routes)
     }
 }
