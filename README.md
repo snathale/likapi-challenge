@@ -17,7 +17,7 @@ Building an API RESTful using NodoJS and MongoDB
 * [yarn](https://classic.yarnpkg.com/en/docs/install/#debian-stable) or [npm](https://www.npmjs.com/get-npm) 
 * [Docker-compose](https://docs.docker.com/compose/install/)
 
-##Running
+## Running
 The project considers yarn as package manager.
 If you prefer execute local server use: 
 ```
