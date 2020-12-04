@@ -17,7 +17,7 @@ export default class OrderService {
                     .then((response: AxiosResponse) => {
                         const order = response.data.retorno.pedidos
                         if (order) {
-                            resp.push(OrderService.hydrateOrder(order[0].pedido, deal.value, deal.org_name, deal.won_time))
+                            resp.push(OrderService.hydrateOrder(order[0].pedido, deal.value, deal.org_name))
                         }
                     })
                     .catch((err) => {
@@ -39,7 +39,7 @@ export default class OrderService {
                 },
                 itens: {
                     item: {
-                        codigo: deals.id + "979668",
+                        codigo: deals.id,
                         descricao: deals.title,
                         vlr_unit: deals.value,
                         vlr: "1"
@@ -51,14 +51,14 @@ export default class OrderService {
         return axios.post(`${blingDomain}pedido/json/?apikey=${blingTokenApi}&xml=${orderXml}`)
     }
 
-    private static hydrateOrder(rawOrder: IRawOrder, value?: number, organization?: string, won_date?:string): Order {
-        let volumes: Array<Volume> = []
+    private static hydrateOrder(rawOrder: IRawOrder, value?: number, organization?: string): Order {
+        let volumes: Volume[] = []
         const rawVolume = rawOrder.volumes ?? []
         rawVolume.forEach((value) => {
             const volume = new Volume(value.servico ?? '', value.codigoRastreamento ?? '')
             volumes.push(volume)
         })
-        const date = new Date(won_date??'')
+        const date = new Date()
         return new Order(rawOrder.idPedido ?? 0, rawOrder.numero ?? '', volumes, value ?? 0, organization ?? '',date)
     }
 }

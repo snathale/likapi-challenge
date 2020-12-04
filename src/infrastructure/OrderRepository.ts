@@ -38,6 +38,7 @@ export default class OrderRepository {
         const year = order.date.getUTCFullYear()
         const initialDate = `${year}-${month}-${day} 00:00:00`
         const finalDate = `${year}-${month}-${day} 23:59:59`
+        console.log(initialDate, finalDate)
         return this.model.model.updateOne(
             {
                 createdAt: {

@@ -19,11 +19,17 @@ Building an API RESTful using NodoJS and MongoDB
 
 ##Running
 The project considers yarn as package manager.
-For download project dependencies and execute the NodeJS server use: 
+If you prefer execute local server use: 
 ```
    $ yarn && yarn dev
 ```
-NOTE: Don't forget to set .env requirements. the file .emv.example there are all them
+
+If you prefer docker-compose environment use: 
+```
+   $ docker-compose up -d
+```
+NOTE: Don't forget to set .env requirements. Look at .emv.example file, there are all them \
+NOTE: If you prefer to use docker-compose, don't forget to add the alias line: ```127.0.0.1 app.service``` in your hosts (/etc/hosts).
 
 
 ## Routes
@@ -54,8 +60,7 @@ Response
         "__v" : 0,
         "createdAt" : "2020-12-03T14:13:20.740Z",
         "updatedAt" : "2020-12-03T14:21:40.113Z",
-        "orderDate": "2020-12-03T14:12:40.113Z",
-        "total" : 40
+        "value" : 40
     }
 ]
 ```
@@ -88,8 +93,14 @@ Response
       "volumes":[],
       "value":10,
       "organization":"FakeOrganization",
-      "orderDate":"2020-12-02T02:31:20.000Z"
+      "date":"2020-12-02T02:31:20.000Z"
     }
 ]
 ```
 NOTE: The Responses it's using [JSend](https://github.com/omniti-labs/jsend) especification
+
+##Testing
+To execute test use: 
+```
+   $ yarn test
+```
