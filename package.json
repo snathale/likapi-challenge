@@ -14,20 +14,26 @@
   },
   "scripts": {
     "dev": "ts-node-dev --respawn --ignore-watch node_modules --no-notify src/server.ts",
-    "test": "jest --no-cache"
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts'"
   },
   "dependencies": {
+    "@types/chai": "^4.2.14",
     "@types/dotenv": "^8.2.0",
-    "@types/jest": "^26.0.16",
+    "@types/mocha": "^8.0.4",
+    "@types/moment-timezone": "^0.5.30",
     "@types/mongoose": "^5.10.1",
     "@types/node": "^14.14.10",
     "axios": "^0.21.0",
+    "chai": "^4.2.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.14.0",
     "express": "^4.17.1",
     "jsend": "^1.1.0",
     "jsend-express": "^1.2.4",
+    "mocha": "^8.2.1",
+    "moment-timezone": "^0.5.32",
     "mongoose": "^5.11.1",
+    "ts-node": "^9.1.0",
     "xml-js": "^1.6.11"
   }
 }

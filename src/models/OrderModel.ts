@@ -1,4 +1,4 @@
-import {Model, model, Schema} from "mongoose";
+import {Model, model, Schema, Types} from "mongoose";
 
 export default class OrderModel {
     public model: Model<any>
@@ -7,33 +7,12 @@ export default class OrderModel {
         this.model = model('order', this.OrderSchema)
     }
 
-    VolumeSchema = new Schema({
-        service: {
-            type: String
-        },
-        track_code: {
-            type: String
-        }
-    })
-
     OrderSchema = new Schema({
-            order_id: {
-                type: Number,
-                required: true
-            },
-            number: {
-                type: String,
-                required: true
-            },
-            volumes: [
-                this.VolumeSchema
-            ],
+            createdAt: Date,
+            updatedAt: Date,
             value: {
                 type: Number,
                 required: true
-            },
-            organization: {
-                type: String
             }
         },
         {

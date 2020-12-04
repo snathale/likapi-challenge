@@ -4,6 +4,7 @@ import OrderRepository from "../infrastructure/OrderRepository";
 import OrderController from "../controller/OrderController";
 import DealService from "../infrastructure/service/DealService";
 import OrderService from "../infrastructure/service/OrderService";
+import OrderModel from "../models/OrderModel";
 
 export default class App {
     server: core.Express
@@ -11,7 +12,7 @@ export default class App {
 
     constructor() {
         this.server = express()
-        this.repository = new OrderRepository()
+        this.repository = new OrderRepository(new OrderModel())
     }
 
     public run() {
