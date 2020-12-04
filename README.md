@@ -28,8 +28,8 @@ If you prefer docker-compose environment use:
 ```
    $ docker-compose up -d
 ```
-NOTE: Don't forget to set .env requirements. Look at .emv.example file, there are all them \
-NOTE: If you prefer to use docker-compose, don't forget to add the alias line: ```127.0.0.1 app.service``` in your hosts (/etc/hosts).
+**NOTE**: Don't forget to set .env requirements. Look at .emv.example file, there are all them \
+**NOTE**: If you prefer to use docker-compose, don't forget to add the alias line: ```127.0.0.1 app.service``` in your hosts (/etc/hosts).
 
 
 ## Routes
@@ -64,7 +64,7 @@ Response
     }
 ]
 ```
-NOTE: The Responses it's using [JSend](https://github.com/omniti-labs/jsend) especification
+**NOTE**: The Response it's using [JSend](https://github.com/omniti-labs/jsend) especification
 
 #### Save orders
 
