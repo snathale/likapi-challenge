@@ -1,10 +1,10 @@
 # LinkApi-challenge - Pipedrive + Bling
 
-##Objective
+## Objective
 
 Building an API RESTful using NodoJS and MongoDB
 
-##Requirements
+## Requirements
 
 * Creating test accounts on Pipedrive and Blig platform
 * Creating integration beetween Pipedrive and Bling platform
@@ -12,7 +12,7 @@ Building an API RESTful using NodoJS and MongoDB
 * Creating on mongoDB one collection and then aggregating bling deals by day and total value
 * Creating an endpoint to give the consolidated dada on MongoDB
 
-##Technical Requirements
+## Technical Requirements
 
 * [yarn](https://classic.yarnpkg.com/en/docs/install/#debian-stable) or [npm](https://www.npmjs.com/get-npm) 
 * [Docker-compose](https://docs.docker.com/compose/install/)
@@ -34,7 +34,7 @@ NOTE: If you prefer to use docker-compose, don't forget to add the alias line: `
 
 ## Routes
 
-####List orders
+#### List orders
 
 This route list all the orders aggregated by day and total value, storage in MongoDB
 
@@ -66,7 +66,7 @@ Response
 ```
 NOTE: The Responses it's using [JSend](https://github.com/omniti-labs/jsend) especification
 
-####Save orders
+#### Save orders
 
 This route will get all the deals with won status on the Pipedrive, create an order on Bling and save the orders aggregated by day and total value, storage in MongoDB
 
@@ -99,7 +99,7 @@ Response
 ```
 NOTE: The Responses it's using [JSend](https://github.com/omniti-labs/jsend) especification
 
-##Testing
+## Testing
 To execute test use: 
 ```
    $ yarn test
